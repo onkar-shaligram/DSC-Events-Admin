@@ -9,7 +9,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
   final ref = FirebaseFirestore.instance.collection('events');
 
   @override
@@ -18,14 +17,12 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         title: Text('DSC Events Admin'),
       ),
-
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => NewEvent()));
-        },
-        child: Icon(Icons.add)
-        ),
-
+          onPressed: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => NewEvent()));
+          },
+          child: Icon(Icons.add)),
       body: StreamBuilder(
           stream: ref.snapshots(),
           builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -34,7 +31,12 @@ class _HomeState extends State<Home> {
                 itemBuilder: (context, index) {
                   return InkWell(
                     onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => EditEvent(docToEdit: snapshot.data.docs[index],)));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => EditEvent(
+                                    docToEdit: snapshot.data.docs[index],
+                                  )));
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -53,7 +55,9 @@ class _HomeState extends State<Home> {
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(8),
                                     child: Image.network(
-                                      snapshot.data.docs[index].data()['imageUrl'].toString(),
+                                      snapshot.data.docs[index]
+                                          .data()['imageUrl']
+                                          .toString(),
                                       height: 80,
                                       width: MediaQuery.of(context).size.width,
                                       fit: BoxFit.cover,
@@ -71,7 +75,8 @@ class _HomeState extends State<Home> {
                                   height: 10,
                                 ),
                                 Text(
-                                  snapshot.data.docs[index].data()['description'],
+                                  snapshot.data.docs[index]
+                                      .data()['description'],
                                   style: TextStyle(fontSize: 13),
                                 ),
                                 SizedBox(
@@ -90,8 +95,6 @@ class _HomeState extends State<Home> {
                   );
                 });
           }),
-
-      
     );
   }
 }

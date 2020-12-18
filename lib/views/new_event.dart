@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path/path.dart' as Path; 
+import 'package:path/path.dart' as Path;
 
 class NewEvent extends StatefulWidget {
   @override
@@ -12,10 +12,10 @@ class NewEvent extends StatefulWidget {
 }
 
 class _NewEventState extends State<NewEvent> {
-
   TextEditingController urlTextEditingController = TextEditingController();
   TextEditingController titleTextEditingController = TextEditingController();
-  TextEditingController descriptionTextEditingController = TextEditingController();
+  TextEditingController descriptionTextEditingController =
+      TextEditingController();
   TextEditingController timeTextEditingController = TextEditingController();
 
   String imageUrl;
@@ -46,7 +46,8 @@ class _NewEventState extends State<NewEvent> {
       // upload image
       FirebaseStorage storage = FirebaseStorage.instance;
 
-      Reference storageReference = storage.ref().child("images/${Path.basename(selectedImage.path)}");
+      Reference storageReference =
+          storage.ref().child("images/${Path.basename(selectedImage.path)}");
 
       UploadTask uploadTask = storageReference.putFile(selectedImage);
 
@@ -60,6 +61,7 @@ class _NewEventState extends State<NewEvent> {
         }
       });
 
+      // upload to firebase
       Map<String, dynamic> eventData = {
         "urlToEvent": urlTextEditingController.text,
         "description": descriptionTextEditingController.text,
@@ -68,7 +70,6 @@ class _NewEventState extends State<NewEvent> {
         "time": timeTextEditingController.text,
       };
 
-      // upload to firebase
       FirebaseFirestore.instance
           .collection("events")
           .add(eventData)
@@ -123,7 +124,6 @@ class _NewEventState extends State<NewEvent> {
                                 ),
                               ),
                             ),
-
                       TextField(
                         controller: titleTextEditingController,
                         decoration: InputDecoration(hintText: "Enter title"),
@@ -131,12 +131,14 @@ class _NewEventState extends State<NewEvent> {
                       ),
                       TextField(
                         controller: descriptionTextEditingController,
-                        decoration: InputDecoration(hintText: "Enter description"),
+                        decoration:
+                            InputDecoration(hintText: "Enter description"),
                         maxLines: 4,
                       ),
                       TextField(
                         controller: urlTextEditingController,
-                        decoration: InputDecoration(hintText: "Enter URL to event"),
+                        decoration:
+                            InputDecoration(hintText: "Enter URL to event"),
                         maxLines: 2,
                       ),
                       TextField(
