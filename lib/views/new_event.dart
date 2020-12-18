@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart' as Path; 
 
 class NewEvent extends StatefulWidget {
   @override
@@ -45,7 +46,7 @@ class _NewEventState extends State<NewEvent> {
       // upload image
       FirebaseStorage storage = FirebaseStorage.instance;
 
-      Reference storageReference = storage.ref().child("/images");
+      Reference storageReference = storage.ref().child("images/${Path.basename(selectedImage.path)}");
 
       UploadTask uploadTask = storageReference.putFile(selectedImage);
 
