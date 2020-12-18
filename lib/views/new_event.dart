@@ -21,7 +21,7 @@ class _NewEventState extends State<NewEvent> {
 
   bool isLoading = false;
 
-  File _selectedImage;
+  File selectedImage;
   final picker = ImagePicker();
 
   Future getImage() async {
@@ -29,7 +29,7 @@ class _NewEventState extends State<NewEvent> {
 
     setState(() {
       if (pickedFile != null) {
-        _selectedImage = File(pickedFile.path);
+        selectedImage = File(pickedFile.path);
       } else {
         print('No image selected.');
       }
@@ -37,8 +37,8 @@ class _NewEventState extends State<NewEvent> {
   }
 
   addEvent() async {
-// make sure we have image
-    if (_selectedImage != null) {
+    // make sure we have image
+    if (selectedImage != null) {
       setState(() {
         isLoading = true;
       });
@@ -47,7 +47,7 @@ class _NewEventState extends State<NewEvent> {
 
       Reference storageReference = storage.ref().child("/images");
 
-      UploadTask uploadTask = storageReference.putFile(_selectedImage);
+      UploadTask uploadTask = storageReference.putFile(selectedImage);
 
       // get download url
       await uploadTask.whenComplete(() async {
@@ -71,8 +71,8 @@ class _NewEventState extends State<NewEvent> {
       FirebaseFirestore.instance
           .collection("events")
           .add(eventData)
-          .catchError((onError) {
-        print("Issue encountered while uploading data to firestore : $onError");
+          .catchError((e) {
+        print("Error encountered while uploading data : $e");
       });
 
       Navigator.pop(context);
@@ -92,7 +92,7 @@ class _NewEventState extends State<NewEvent> {
                   margin: EdgeInsets.symmetric(horizontal: 16),
                   child: Column(
                     children: [
-                      _selectedImage == null
+                      selectedImage == null
                           ? GestureDetector(
                               onTap: () {
                                 getImage();
@@ -115,7 +115,7 @@ class _NewEventState extends State<NewEvent> {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(8),
                                 child: Image.file(
-                                  _selectedImage,
+                                  selectedImage,
                                   height: 180,
                                   width: MediaQuery.of(context).size.width,
                                   fit: BoxFit.cover,
@@ -126,20 +126,23 @@ class _NewEventState extends State<NewEvent> {
                       TextField(
                         controller: titleTextEditingController,
                         decoration: InputDecoration(hintText: "Enter title"),
+                        maxLines: 2,
                       ),
                       TextField(
                         controller: descriptionTextEditingController,
                         decoration: InputDecoration(hintText: "Enter description"),
+                        maxLines: 4,
                       ),
                       TextField(
                         controller: urlTextEditingController,
                         decoration: InputDecoration(hintText: "Enter URL to event"),
+                        maxLines: 2,
                       ),
                       TextField(
                         controller: timeTextEditingController,
                         decoration: InputDecoration(hintText: "Enter time"),
+                        maxLines: 2,
                       ),
-                      
                     ],
                   ),
                 ),
