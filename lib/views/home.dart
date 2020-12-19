@@ -9,7 +9,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final ref = FirebaseFirestore.instance.collection('events');
+  final ref = FirebaseFirestore.instance.collection('events').orderBy('uploadTime', descending: true);
 
   @override
   Widget build(BuildContext context) {

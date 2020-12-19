@@ -68,6 +68,7 @@ class _NewEventState extends State<NewEvent> {
         "title": titleTextEditingController.text,
         "imageUrl": imageUrl,
         "time": timeTextEditingController.text,
+        "uploadTime": DateTime.now().millisecond
       };
 
       FirebaseFirestore.instance
