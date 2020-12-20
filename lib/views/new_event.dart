@@ -17,6 +17,7 @@ class _NewEventState extends State<NewEvent> {
   TextEditingController descriptionTextEditingController =
       TextEditingController();
   TextEditingController timeTextEditingController = TextEditingController();
+  TextEditingController priorityTextEditingController = TextEditingController();
 
   String imageUrl;
 
@@ -68,7 +69,8 @@ class _NewEventState extends State<NewEvent> {
         "title": titleTextEditingController.text,
         "imageUrl": imageUrl,
         "time": timeTextEditingController.text,
-        "uploadTime": DateTime.now().millisecond
+        //"uploadTime": DateTime.now().millisecond
+        "priority": priorityTextEditingController.text
       };
 
       FirebaseFirestore.instance
@@ -146,6 +148,11 @@ class _NewEventState extends State<NewEvent> {
                         controller: timeTextEditingController,
                         decoration: InputDecoration(hintText: "Enter time"),
                         maxLines: 2,
+                      ),
+                      TextField(
+                        controller: priorityTextEditingController,
+                        decoration: InputDecoration(hintText: "Enter Priority Number"),
+                        maxLines: 1,
                       ),
                     ],
                   ),

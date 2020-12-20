@@ -21,11 +21,14 @@ class _EditEventState extends State<EditEvent> {
         TextEditingController(text: widget.docToEdit.data()['urlToEvent']);
     TextEditingController timeTextEditingController =
         TextEditingController(text: widget.docToEdit.data()['time']);
+      TextEditingController priorityTextEditingController =
+        TextEditingController(text: widget.docToEdit.data()['priority']);
 
     // print(titleTextEditingController);
     // print(descriptionTextEditingController);
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         actions: [
           FlatButton(
@@ -45,6 +48,7 @@ class _EditEventState extends State<EditEvent> {
             'description': descriptionTextEditingController.text,
             'urlToEvent': urlTextEditingController.text,
             'time': timeTextEditingController.text,
+            "priority": priorityTextEditingController.text
           }).whenComplete(() => Navigator.pop(context));
         },
         child: Icon(Icons.save),
@@ -80,6 +84,12 @@ class _EditEventState extends State<EditEvent> {
                   decoration: InputDecoration(
                       hintText: "Enter time", labelText: 'Time of Event'),
                   maxLines: 2,
+                ),
+                TextField(
+                  controller: priorityTextEditingController,
+                  decoration: InputDecoration(
+                      hintText: "Enter Priority Number", labelText: 'Priority Level'),
+                  maxLines: 1,
                 ),
               ],
             ),

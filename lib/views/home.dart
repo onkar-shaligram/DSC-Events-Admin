@@ -9,7 +9,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final ref = FirebaseFirestore.instance.collection('events').orderBy('uploadTime', descending: true);
+  final ref = FirebaseFirestore.instance.collection('events').orderBy('priority', descending: false);
 
   @override
   Widget build(BuildContext context) {
@@ -84,6 +84,13 @@ class _HomeState extends State<Home> {
                                 ),
                                 Text(
                                   snapshot.data.docs[index].data()['time'],
+                                  style: TextStyle(fontSize: 13),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  "Priority : ${snapshot.data.docs[index].data()['priority']}",
                                   style: TextStyle(fontSize: 13),
                                 ),
                               ],
